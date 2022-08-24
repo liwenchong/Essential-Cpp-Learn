@@ -37,9 +37,7 @@ template <typename elemType>
 void display_vector( const vector<elemType> &vec,
                      ostream &os=cout, int len= 8 )
 {
-	 vector<elemType>::const_iterator 
-               iter = vec.begin(), 
-               end_it = vec.end();
+	typename vector<elemType>::const_iterator iter = vec.begin(), end_it = vec.end();
 
     int elem_cnt = 1;
     while ( iter != end_it ) 
