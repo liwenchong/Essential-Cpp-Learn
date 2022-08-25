@@ -1,18 +1,19 @@
 #include <iostream>
 #include <vector>
+#include <functional>
+#include <algorithm>
 
 using namespace std;
 
-vector<int> filter(const vector<int> &vec, int filter_value, bool (*pred)(int, int))
+vector<int> filter(const vector<int> &vec, int val, const less<int> &lt)
 {
     vector<int> nvec;
+    vector<int>::const_iterator iter = vec.begin();
 
-    for(int ix = 0; ix < vec.size(); ++ix)
+    while((iter = find_if(iter, vec.end(), bind2nd(lt, val))) != vec.end())
     {
-        if(pred(vec[ix], filter_value))
-        {
-            nvec.push_back(vec[ix]);
-        }
+        nvec.push_back(*iter);
+        iter++;
     }
 
     return nvec;
@@ -25,8 +26,9 @@ bool less_than(int v1, int v2)
 
 int main()
 {
+    // less<int> a;
     vector<int> vec{1, 2, 3, 4, 5 , 6, 8};
-    vector<int> nvec = filter(vec, 5, less_than);
+    vector<int> nvec = filter(vec, 5, less<int>());
     cout << nvec[0] << endl;
     return 0;
 }
